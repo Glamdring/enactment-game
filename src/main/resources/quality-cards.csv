@@ -1,0 +1,14 @@
+title,resources,discard,effect
+Charisma,2,1,Cards cost 1 less popularity
+Popularity in the civil service,3,1,Cards cost 1 less capacity
+Contacts with business circles,3,1,Cards cost 1 less financial resources
+Political will,3,1,Cannot be stopped. Each card costs +1 (any resource)
+Party discipline,2,2,Each turn in the 2nd segment the player can trade 3 of any resource for 1 move
+Moral principles,2,1,Can't be put more than 1 off target. Can't play cards that drain morality
+Knowing the secrets of others,3,1,Each attack card costs the attacker +1 popularity
+Good reputation,3,1,Cards cost 1 less influence
+Wealth,2,2,Can use any resource instead of financial resources
+Negotiation skills,4,1,Lose 1 less resource (of choice) when an attacker plays  a card.
+Ties with the media,2,2,"Instead of playing a card, can trade 1 morality for 1 move forward"
+Party leadership favorite,2,2,Cards that stop you or move you off target cost +1 of the attacker's choice
+Team recruitment skills,3,1,Each attack card costs the attacker +1 capacity

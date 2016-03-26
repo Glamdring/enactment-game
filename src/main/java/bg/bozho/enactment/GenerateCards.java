@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,11 @@ public class GenerateCards {
     public static void main(String[] args) throws Exception {
         initlializeResourceImages();
         
+        generateActionCards();
+        generateQualityCards();
+    }
+
+    private static void generateActionCards() throws UnsupportedEncodingException, IOException {
         InputStream csvStream = GenerateCards.class.getResourceAsStream("/cards.csv");
         final Reader reader = new InputStreamReader(new BOMInputStream(csvStream), "UTF-8");
 
@@ -99,6 +105,28 @@ public class GenerateCards {
         }
     }
 
+    private static void generateQualityCards() throws UnsupportedEncodingException, IOException {
+        InputStream csvStream = GenerateCards.class.getResourceAsStream("/quality-cards.csv");
+        final Reader reader = new InputStreamReader(new BOMInputStream(csvStream), "UTF-8");
+
+        try (CSVParser parser = new CSVParser(reader, CSVFormat.EXCEL.withHeader())) {
+            for (CSVRecord record : parser.getRecords())  { 
+                for (int i = 0; i < 2; i ++) {
+                    BufferedImage card = ImageIO.read(GenerateCards.class.getResourceAsStream("/blank.png"));
+                    Graphics2D g2 = card.createGraphics();
+                    g2.setColor(Color.BLACK);
+                    g2.setFont(font);
+                    
+                    g2.drawString("Resources: " + record.get("resources"), 10, 20);
+                    g2.drawString("Discard: " + record.get("discard"), 10, 40);
+                    drawText(record.get("title") + ": " + record.get("effect"), g2);
+                    
+                    ImageIO.write(card, "png", new File("c:/tmp/cards/quality/" + record.get("title").replace(" ", "_") + i + ".png"));
+                }
+            }
+        }
+    }
+    
     private static void drawPlayableInSegment(String playableInSegment, Graphics2D g2) {
         if (StringUtils.isNotBlank(playableInSegment)) {
             g2.drawString(playableInSegment, 10, 20 + ICON_WIDTH_HEIGHT + 20);
