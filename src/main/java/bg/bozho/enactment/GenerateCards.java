@@ -98,6 +98,7 @@ public class GenerateCards {
                             + financialResourcesEffect, g2);
                     
                     drawPlayableInSegment(playableInSegment, g2);
+                    drawBorder(g2, card);
                     
                     ImageIO.write(card, "png", new File("c:/tmp/cards/" + text.replace(" ", "_") + i + ".png"));
                 }
@@ -120,11 +121,16 @@ public class GenerateCards {
                     g2.drawString("Resources: " + record.get("resources"), 10, 20);
                     g2.drawString("Discard: " + record.get("discard"), 10, 40);
                     drawText(record.get("title") + ": " + record.get("effect"), g2);
+                    drawBorder(g2, card);
                     
                     ImageIO.write(card, "png", new File("c:/tmp/cards/quality/" + record.get("title").replace(" ", "_") + i + ".png"));
                 }
             }
         }
+    }
+    
+    private static void drawBorder(Graphics2D g2, BufferedImage card) {
+        g2.drawRect(0, 0, card.getWidth() - 1, card.getHeight() - 1);
     }
     
     private static void drawPlayableInSegment(String playableInSegment, Graphics2D g2) {
