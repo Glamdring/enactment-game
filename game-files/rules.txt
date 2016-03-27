@@ -20,7 +20,7 @@ Three actions:
 OR
 - move your piece (one way forward or one way on target)
 
-Win condition: finalize a reform with 3 or less off-target
+Win condition: finalize a reform with 2 or less off-target
 Lose condition: if you are left with 0 morality
 
 resources are visible to everyone

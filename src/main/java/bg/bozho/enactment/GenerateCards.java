@@ -24,14 +24,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 public class GenerateCards {
-    private static final String OUTPUT_DIR = "c:/tmp/cards/";
+    public static final String OUTPUT_DIR = "c:/tmp/cards/";
     private static final int ICON_WIDTH_HEIGHT = 32;
     private static final int CARD_WIDTH = 200;
     private static final int CARD_HEIGHT = 280;
     
     private static Font font = new Font("Arial", Font.BOLD, 20);
     
-    private static Map<Resource, BufferedImage> resourcesImages = new HashMap<>();
+    public static Map<Resource, BufferedImage> resourcesImages = new HashMap<>();
     
     public static void main(String[] args) throws Exception {
         initlializeResourceImages();
@@ -203,7 +203,7 @@ public class GenerateCards {
         return resourceCount;
     }
 
-    private static void initlializeResourceImages() throws IOException {
+    public static void initlializeResourceImages() throws IOException {
         for (Resource resource : Resource.values()) {
             resourcesImages.put(resource,
                     ImageIO.read(GenerateCards.class.getResourceAsStream("/icons/" + resource.toString() + ".png")));
