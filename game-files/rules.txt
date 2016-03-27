@@ -1,0 +1,26 @@
+Some governments all work towards better results. However, often it happens that politicians within the same government are rivals.
+Be part of such a rivalry.
+
+- 
+
+Start with 5 resource cards and 5 morality.
+Before the start draw 3 quality cards. Change up to 2.
+
+Three actions:
+
+- draw three resources (of seven open on the market)
+-- you can choose "corruption". If you do, draw 5 resource cards, and lose 2 morality and 1 target
+-- at this step you can trade 4 of any resource for an action card
+- draw an action card
+-- a player cannot have more than 4 action cards in his hand and discards one at random
+-- if you are at stage 2, you can trade two stage 1 cards for a new card
+- play a card
+
+- play a quality card if you want (can't play more than 2 quality cards in segment 1)
+OR
+- move your piece (one way forward or one way on target)
+
+Win condition: finalize a reform with 3 or less off-target
+Lose condition: if you are left with 0 morality
+
+resources are visible to everyone

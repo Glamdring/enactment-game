@@ -1,0 +1,14 @@
+﻿Capacity (what is the capacity of your team)
+
+Financial resources (what can you offer to stakeholders, financial instruments at your disposal)
+
+Popularity (how popular you are among voters)
+
+Influence (how influential you are on the political scene)
+
+Luck (how lucky are you)
+
+Morality (how moral are you - non-replinishable)
+
+
+
