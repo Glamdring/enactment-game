@@ -24,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 public class GenerateCards {
+    private static final String OUTPUT_DIR = "c:/tmp/cards/";
     private static final int ICON_WIDTH_HEIGHT = 32;
     private static final int CARD_WIDTH = 200;
     private static final int CARD_HEIGHT = 280;
@@ -37,6 +38,7 @@ public class GenerateCards {
         
         generateActionCards();
         generateQualityCards();
+        generateResourceCards();
     }
 
     private static void generateActionCards() throws UnsupportedEncodingException, IOException {
@@ -46,61 +48,60 @@ public class GenerateCards {
         try (CSVParser parser = new CSVParser(reader, CSVFormat.EXCEL.withHeader())) {
             for (CSVRecord record : parser.getRecords())  { 
                 int count = Integer.parseInt(record.get("Count"));
-                for (int i = 0; i < count; i ++) {
-                    BufferedImage card = ImageIO.read(GenerateCards.class.getResourceAsStream("/blank.png"));
-                    
-                    String text = record.get("Text");
-                    int influence = Integer.parseInt(record.get("influence"));
-                    int capacity = Integer.parseInt(record.get("capacity"));
-                    int financialResources = Integer.parseInt(record.get("financial resources"));
-                    int popularity = Integer.parseInt(record.get("popularity"));
-                    int luck = Integer.parseInt(record.get("luck"));
-                    int morality = Integer.parseInt(record.get("morality"));
-                    
-                    // effects
-                    int influenceEffect = Integer.parseInt(record.get("influence-e"));
-                    int capacityEffect = Integer.parseInt(record.get("capacity-e"));
-                    int financialResourcesEffect = Integer.parseInt(record.get("financial resources-e"));
-                    int popularityEffect = Integer.parseInt(record.get("popularity-e"));
-                    int moveEffect = Integer.parseInt(record.get("move"));
-                    int targetEffect = Integer.parseInt(record.get("target"));
-                    
-                    String playableInSegment = record.get("Playable in segment");
+                BufferedImage card = ImageIO.read(GenerateCards.class.getResourceAsStream("/blank.png"));
+                
+                String text = record.get("Text");
+                int influence = Integer.parseInt(record.get("influence"));
+                int capacity = Integer.parseInt(record.get("capacity"));
+                int financialResources = Integer.parseInt(record.get("financial resources"));
+                int popularity = Integer.parseInt(record.get("popularity"));
+                int luck = Integer.parseInt(record.get("luck"));
+                int morality = Integer.parseInt(record.get("morality"));
+                
+                // effects
+                int influenceEffect = Integer.parseInt(record.get("influence-e"));
+                int capacityEffect = Integer.parseInt(record.get("capacity-e"));
+                int financialResourcesEffect = Integer.parseInt(record.get("financial resources-e"));
+                int popularityEffect = Integer.parseInt(record.get("popularity-e"));
+                int moveEffect = Integer.parseInt(record.get("move"));
+                int targetEffect = Integer.parseInt(record.get("target"));
+                
+                String playableInSegment = record.get("Playable in segment");
 
-                    int resourceCount = 0;
-                    Graphics2D g2 = card.createGraphics();
-                    g2.setFont(font);
-                    g2.setColor(Color.BLACK);
-                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    
-                    resourceCount = drawResource(influence, Resource.INFLUENCE, resourceCount, g2);
-                    resourceCount = drawResource(capacity, Resource.CAPACITY, resourceCount, g2);
-                    resourceCount = drawResource(popularity, Resource.POPULARITY, resourceCount, g2);
-                    resourceCount = drawResource(financialResources, Resource.MONEY, resourceCount, g2);
-                    resourceCount = drawResource(luck, Resource.LUCK, resourceCount, g2);
-                    resourceCount = drawResource(morality, Resource.MORALITY, resourceCount, g2);
-                    
-                    drawText(text, g2);
-                    
-                    int effectCount = 0;
-                    int totalEffect = Math.abs(moveEffect) + Math.abs(targetEffect) + Math.abs(influenceEffect)
-                                    + Math.abs(capacityEffect) + Math.abs(popularityEffect)
-                                    + Math.abs(financialResourcesEffect);
-                    
-                    effectCount = drawEffect(moveEffect, Resource.MOVE, effectCount, totalEffect, g2);
-                    effectCount = drawEffect(targetEffect, Resource.TARGET, effectCount, totalEffect, g2);
-                    effectCount = drawEffect(influenceEffect, Resource.INFLUENCE, effectCount, totalEffect, g2);
-                    effectCount = drawEffect(capacityEffect, Resource.CAPACITY, effectCount, totalEffect, g2);
-                    effectCount = drawEffect(popularityEffect, Resource.POPULARITY, effectCount, totalEffect, g2);
-                    effectCount = drawEffect(financialResourcesEffect, Resource.MONEY, effectCount, totalEffect, g2);
-                    
-                    drawEffectSign(moveEffect + targetEffect + influenceEffect + capacityEffect + popularityEffect
-                            + financialResourcesEffect, g2);
-                    
-                    drawPlayableInSegment(playableInSegment, g2);
-                    drawBorder(g2, card);
-                    
-                    ImageIO.write(card, "png", new File("c:/tmp/cards/" + text.replace(" ", "_") + i + ".png"));
+                int resourceCount = 0;
+                Graphics2D g2 = card.createGraphics();
+                g2.setFont(font);
+                g2.setColor(Color.BLACK);
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                resourceCount = drawResource(influence, Resource.INFLUENCE, resourceCount, g2);
+                resourceCount = drawResource(capacity, Resource.CAPACITY, resourceCount, g2);
+                resourceCount = drawResource(popularity, Resource.POPULARITY, resourceCount, g2);
+                resourceCount = drawResource(financialResources, Resource.MONEY, resourceCount, g2);
+                resourceCount = drawResource(luck, Resource.LUCK, resourceCount, g2);
+                resourceCount = drawResource(morality, Resource.MORALITY, resourceCount, g2);
+                
+                drawText(text, g2);
+                
+                int effectCount = 0;
+                int totalEffect = Math.abs(moveEffect) + Math.abs(targetEffect) + Math.abs(influenceEffect)
+                                + Math.abs(capacityEffect) + Math.abs(popularityEffect)
+                                + Math.abs(financialResourcesEffect);
+                
+                effectCount = drawEffect(moveEffect, Resource.MOVE, effectCount, totalEffect, g2);
+                effectCount = drawEffect(targetEffect, Resource.TARGET, effectCount, totalEffect, g2);
+                effectCount = drawEffect(influenceEffect, Resource.INFLUENCE, effectCount, totalEffect, g2);
+                effectCount = drawEffect(capacityEffect, Resource.CAPACITY, effectCount, totalEffect, g2);
+                effectCount = drawEffect(popularityEffect, Resource.POPULARITY, effectCount, totalEffect, g2);
+                effectCount = drawEffect(financialResourcesEffect, Resource.MONEY, effectCount, totalEffect, g2);
+                
+                drawEffectSign(moveEffect + targetEffect + influenceEffect + capacityEffect + popularityEffect
+                        + financialResourcesEffect, g2);
+                
+                drawPlayableInSegment(playableInSegment, g2);
+                drawBorder(g2, card);
+                for (int i = 0; i < count; i ++) {
+                    ImageIO.write(card, "png", new File(OUTPUT_DIR + "/action/" + text.replace(" ", "_") + i + ".png"));
                 }
             }
         }
@@ -112,19 +113,32 @@ public class GenerateCards {
 
         try (CSVParser parser = new CSVParser(reader, CSVFormat.EXCEL.withHeader())) {
             for (CSVRecord record : parser.getRecords())  { 
-                for (int i = 0; i < 2; i ++) {
-                    BufferedImage card = ImageIO.read(GenerateCards.class.getResourceAsStream("/blank.png"));
-                    Graphics2D g2 = card.createGraphics();
-                    g2.setColor(Color.BLACK);
-                    g2.setFont(font);
-                    
-                    g2.drawString("Resources: " + record.get("resources"), 10, 20);
-                    g2.drawString("Discard: " + record.get("discard"), 10, 40);
-                    drawText(record.get("title") + ": " + record.get("effect"), g2);
-                    drawBorder(g2, card);
-                    
-                    ImageIO.write(card, "png", new File("c:/tmp/cards/quality/" + record.get("title").replace(" ", "_") + i + ".png"));
+                BufferedImage card = ImageIO.read(GenerateCards.class.getResourceAsStream("/blank.png"));
+                Graphics2D g2 = card.createGraphics();
+                g2.setColor(Color.BLACK);
+                g2.setFont(font);
+                
+                g2.drawString("Resources: " + record.get("resources"), 10, 20);
+                g2.drawString("Discard: " + record.get("discard"), 10, 40);
+                drawText(record.get("title") + ": " + record.get("effect"), g2);
+                drawBorder(g2, card);
+                for (int i = 0; i < 2; i ++) {                    
+                    ImageIO.write(card, "png", new File(OUTPUT_DIR + "/quality/" + record.get("title").replace(" ", "_") + i + ".png"));
                 }
+            }
+        }
+    }
+    
+    private static void generateResourceCards() throws IOException {
+        for (Resource resource : Resource.values()) {
+            if (resource == Resource.TARGET || resource == Resource.MOVE || resource == Resource.STOP) {
+                continue;
+            }
+            int count = resource == Resource.MORALITY ? 25 : 14;
+            
+            BufferedImage card = ImageIO.read(GenerateCards.class.getResourceAsStream("/resources/" + resource.toString().toLowerCase() + ".png"));
+            for (int i = 0; i < count; i ++) {
+                ImageIO.write(card, "png", new File(OUTPUT_DIR + "/resource/" + resource.toString().toLowerCase() + i + ".png"));
             }
         }
     }
